@@ -16,19 +16,47 @@ CORE_CASES = {
     "美国-自动": ["🇺🇸 美国01", "US Los Angeles", "United States 01"],
 }
 
-OTHER_COUNTRIES = [
-    "🇩🇪 德国", "🇫🇷 法国", "🇬🇧 英国", "🇮🇳 印度-西部", "🇨🇱 智利",
-    "🇧🇷 巴西", "🇪🇸 西班牙", "🇨🇭 瑞士", "🇸🇪 瑞典", "🇲🇽 墨西哥",
-    "🇨🇦 加拿大", "🇦🇺 澳大利亚01", "🇦🇪 迪拜", "🇿🇦 南非",
-    "🇸🇦 沙特阿拉伯", "🇨🇴 哥伦比亚", "🇮🇱 以色列", "🇻🇳 越南",
-    "🇹🇭 泰国", "🇲🇾 马来西亚", "🇷🇺 莫斯科", "🇵🇭 菲律宾",
-    "🇳🇬 尼日利亚01", "🇮🇩 印度尼西亚", "🇹🇷 土耳其", "🇬🇷 希腊",
-    "🇲🇲 缅甸", "🇵🇰 巴基斯坦", "🇳🇴 挪威", "🇰🇭 柬埔寨",
-    "🇪🇬 埃及", "🇮🇶 伊拉克", "🇧🇩 孟加拉", "🇰🇿 哈萨克斯坦",
-    "🇦🇷 阿根廷",
-    # Future/less-common country names must also have a fallback without edits.
+SUBSCRIPTION_COUNTRY_CASES = {
+    "德国-自动": ["🇩🇪 德国", "Germany 01", "DE Frankfurt"],
+    "法国-自动": ["🇫🇷 法国", "France 01", "FR Paris"],
+    "英国-自动": ["🇬🇧 英国", "United Kingdom 01", "UK London"],
+    "印度-自动": ["🇮🇳 印度-西部", "India 01", "IN Mumbai"],
+    "智利-自动": ["🇨🇱 智利", "Chile 01"],
+    "巴西-自动": ["🇧🇷 巴西", "Brazil 01"],
+    "西班牙-自动": ["🇪🇸 西班牙", "Spain 01"],
+    "瑞士-自动": ["🇨🇭 瑞士", "Switzerland 01"],
+    "瑞典-自动": ["🇸🇪 瑞典", "Sweden 01"],
+    "墨西哥-自动": ["🇲🇽 墨西哥", "Mexico 01"],
+    "加拿大-自动": ["🇨🇦 加拿大", "Canada 01"],
+    "澳大利亚-自动": ["🇦🇺 澳大利亚01", "Australia 01"],
+    "阿联酋-自动": ["🇦🇪 迪拜", "阿联酋 01", "UAE Dubai"],
+    "南非-自动": ["🇿🇦 南非", "South Africa 01"],
+    "沙特阿拉伯-自动": ["🇸🇦 沙特阿拉伯", "Saudi Arabia 01"],
+    "哥伦比亚-自动": ["🇨🇴 哥伦比亚", "Colombia 01"],
+    "以色列-自动": ["🇮🇱 以色列", "Israel 01"],
+    "越南-自动": ["🇻🇳 越南", "Vietnam 01"],
+    "泰国-自动": ["🇹🇭 泰国", "Thailand 01"],
+    "马来西亚-自动": ["🇲🇾 马来西亚", "Malaysia 01"],
+    "俄罗斯-自动": ["🇷🇺 莫斯科", "俄罗斯 01", "Russia Moscow"],
+    "菲律宾-自动": ["🇵🇭 菲律宾", "Philippines 01"],
+    "尼日利亚-自动": ["🇳🇬 尼日利亚01", "Nigeria 01"],
+    "印度尼西亚-自动": ["🇮🇩 印度尼西亚", "Indonesia 01"],
+    "土耳其-自动": ["🇹🇷 土耳其", "Turkey 01"],
+    "希腊-自动": ["🇬🇷 希腊", "Greece 01"],
+    "缅甸-自动": ["🇲🇲 缅甸", "Myanmar 01"],
+    "巴基斯坦-自动": ["🇵🇰 巴基斯坦", "Pakistan 01"],
+    "挪威-自动": ["🇳🇴 挪威", "Norway 01"],
+    "柬埔寨-自动": ["🇰🇭 柬埔寨", "Cambodia 01"],
+    "埃及-自动": ["🇪🇬 埃及", "Egypt 01"],
+    "伊拉克-自动": ["🇮🇶 伊拉克", "Iraq 01"],
+    "孟加拉-自动": ["🇧🇩 孟加拉", "Bangladesh 01"],
+    "哈萨克斯坦-自动": ["🇰🇿 哈萨克斯坦", "Kazakhstan 01"],
+    "阿根廷-自动": ["🇦🇷 阿根廷", "Argentina 01"],
+}
+
+FUTURE_COUNTRIES = [
+    # Countries not present in the current subscription still use the fallback.
     "🇳🇿 新西兰", "🇵🇹 葡萄牙", "🇫🇮 芬兰", "🇮🇪 爱尔兰",
-    "Australia 01", "Russia Moscow 01", "Austria Vienna 01",
     "🇦🇹 奥地利", "🇧🇪 比利时", "🇵🇱 波兰", "🇺🇦 乌克兰",
     "🇷🇴 罗马尼亚", "🇨🇿 捷克", "🇭🇺 匈牙利", "🇩🇰 丹麦",
     "🇮🇸 冰岛", "🇵🇪 秘鲁", "🇺🇾 乌拉圭", "🇵🇦 巴拿马",
@@ -36,7 +64,7 @@ OTHER_COUNTRIES = [
     "🇳🇵 尼泊尔", "🇱🇰 斯里兰卡", "🇲🇳 蒙古", "🇱🇦 老挝",
     "🇧🇳 文莱", "🇫🇯 斐济", "🇰🇪 肯尼亚", "🇲🇦 摩洛哥",
     "🇬🇭 加纳", "🇹🇳 突尼斯", "🇪🇹 埃塞俄比亚",
-    "New Zealand 01", "Portugal 01", "United Arab Emirates 01",
+    "New Zealand 01", "Portugal 01", "Austria Vienna 01",
 ]
 
 
@@ -65,9 +93,26 @@ class ClashFullCountryCoverageTest(unittest.TestCase):
                 with self.subTest(group=group, name=name):
                     self.assertRegex(name, pattern)
 
+    def test_subscription_country_groups_match_common_names(self):
+        for group, names in SUBSCRIPTION_COUNTRY_CASES.items():
+            self.assertIn(group, self.groups)
+            pattern = re.compile(self.groups[group], re.IGNORECASE)
+            for name in names:
+                with self.subTest(group=group, name=name):
+                    self.assertRegex(name, pattern)
+
+    def test_all_automatic_group_references_every_subscription_country_group(self):
+        line = next(
+            line for line in self.text.splitlines()
+            if line.startswith("custom_proxy_group=所有-自动`")
+        )
+        references = set(re.findall(r"\[\]([^`]+)", line))
+        expected = set(CORE_CASES) | set(SUBSCRIPTION_COUNTRY_CASES)
+        self.assertEqual(references, expected)
+
     def test_other_group_is_future_proof_for_every_non_core_country(self):
         pattern = re.compile(self.groups["其他-自动"], re.IGNORECASE)
-        for name in OTHER_COUNTRIES:
+        for name in FUTURE_COUNTRIES:
             with self.subTest(name=name):
                 self.assertRegex(name, pattern)
 
@@ -93,25 +138,28 @@ class ClashFullCountryCoverageTest(unittest.TestCase):
 
     def test_critical_service_domains_have_inline_rules_before_remote_providers(self):
         """Critical routing must survive failed remote rule-provider downloads."""
+        # SubConverter accepts at most 64 ruleset declarations. Clash-Full has
+        # 29 remote/final declarations, leaving room for 35 resilient inline rules.
         required = {
             "✨ AI1": ["openai.com", "chatgpt.com", "oaistatic.com", "oaiusercontent.com"],
             "✨ AI2": ["meta.ai", "perplexity.ai"],
             "📘 GitHub": ["github.com", "githubusercontent.com"],
-            "👯‍♂️ TikTok": ["tiktok.com"],
-            "🙋 Telegram": ["telegram.org"],
-            "🕊️ Twitter(X)": ["twitter.com", "x.com"],
-            "🗣️ Facebook": ["facebook.com"],
+            "👯‍♂️ TikTok": ["tiktok.com", "tiktokcdn.com", "tiktokv.com"],
+            "🙋 Telegram": ["telegram.org", "t.me", "telegram-cdn.org"],
+            "🕊️ Twitter(X)": ["twitter.com", "x.com", "twimg.com", "t.co"],
+            "🗣️ Facebook": ["facebook.com", "fbcdn.net", "instagram.com"],
             "🌳 Amazon": ["amazon.com"],
             "🍎 Apple": ["apple.com"],
             "Ⓜ️ Microsoft": ["microsoft.com"],
             "🎮 Steam": ["steamcommunity.com"],
             "🕹️ Game": ["epicgames.com"],
-            "🎞️ YouTube": ["youtube.com"],
+            "🎞️ YouTube": ["youtube.com", "googlevideo.com", "ytimg.com"],
             "📺 Disney": ["disneyplus.com"],
-            "🎥 Netflix": ["netflix.com"],
+            "🎥 Netflix": ["netflix.com", "nflxvideo.net"],
             "🎬 HBO": ["max.com"],
-            "🎵 Spotify": ["spotify.com"],
+            "🎵 Spotify": ["spotify.com", "scdn.co"],
         }
+        self.assertEqual(sum(map(len, required.values())), 35)
         lines = self.text.splitlines()
         final_position = lines.index("ruleset=➡️ 国内,[]FINAL")
         for group, domains in required.items():
