@@ -91,6 +91,20 @@ class ClashFullCountryCoverageTest(unittest.TestCase):
     def test_rule_urls_do_not_contain_nested_http(self):
         self.assertNotIn("gh-proxy.com/http://", self.text)
 
+    def test_openai_domains_have_inline_rules_before_remote_providers(self):
+        """Critical AI routing must survive a failed remote rule-provider download."""
+        lines = self.text.splitlines()
+        required = {
+            "ruleset=✨ AI1,[]DOMAIN-SUFFIX,openai.com",
+            "ruleset=✨ AI1,[]DOMAIN-SUFFIX,chatgpt.com",
+            "ruleset=✨ AI1,[]DOMAIN-SUFFIX,oaistatic.com",
+            "ruleset=✨ AI1,[]DOMAIN-SUFFIX,oaiusercontent.com",
+        }
+        positions = {line: lines.index(line) for line in required if line in lines}
+        self.assertEqual(set(positions), required)
+        remote_ai = next(i for i, line in enumerate(lines) if line.startswith("ruleset=✨ AI1,http"))
+        self.assertTrue(all(position < remote_ai for position in positions.values()))
+
     def test_required_generator_flags_are_enabled(self):
         self.assertIn("enable_rule_generator=true", self.text)
         self.assertIn("overwrite_original_rules=true", self.text)
