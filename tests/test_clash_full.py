@@ -91,19 +91,40 @@ class ClashFullCountryCoverageTest(unittest.TestCase):
     def test_rule_urls_do_not_contain_nested_http(self):
         self.assertNotIn("gh-proxy.com/http://", self.text)
 
-    def test_openai_domains_have_inline_rules_before_remote_providers(self):
-        """Critical AI routing must survive a failed remote rule-provider download."""
-        lines = self.text.splitlines()
+    def test_critical_service_domains_have_inline_rules_before_remote_providers(self):
+        """Critical routing must survive failed remote rule-provider downloads."""
         required = {
-            "ruleset=✨ AI1,[]DOMAIN-SUFFIX,openai.com",
-            "ruleset=✨ AI1,[]DOMAIN-SUFFIX,chatgpt.com",
-            "ruleset=✨ AI1,[]DOMAIN-SUFFIX,oaistatic.com",
-            "ruleset=✨ AI1,[]DOMAIN-SUFFIX,oaiusercontent.com",
+            "✨ AI1": ["openai.com", "chatgpt.com", "oaistatic.com", "oaiusercontent.com"],
+            "✨ AI2": ["meta.ai", "perplexity.ai"],
+            "📘 GitHub": ["github.com", "githubusercontent.com"],
+            "👯‍♂️ TikTok": ["tiktok.com"],
+            "🙋 Telegram": ["telegram.org"],
+            "🕊️ Twitter(X)": ["twitter.com", "x.com"],
+            "🗣️ Facebook": ["facebook.com"],
+            "🌳 Amazon": ["amazon.com"],
+            "🍎 Apple": ["apple.com"],
+            "Ⓜ️ Microsoft": ["microsoft.com"],
+            "🎮 Steam": ["steamcommunity.com"],
+            "🕹️ Game": ["epicgames.com"],
+            "🎞️ YouTube": ["youtube.com"],
+            "📺 Disney": ["disneyplus.com"],
+            "🎥 Netflix": ["netflix.com"],
+            "🎬 HBO": ["max.com"],
+            "🎵 Spotify": ["spotify.com"],
         }
-        positions = {line: lines.index(line) for line in required if line in lines}
-        self.assertEqual(set(positions), required)
-        remote_ai = next(i for i, line in enumerate(lines) if line.startswith("ruleset=✨ AI1,http"))
-        self.assertTrue(all(position < remote_ai for position in positions.values()))
+        lines = self.text.splitlines()
+        final_position = lines.index("ruleset=➡️ 国内,[]FINAL")
+        for group, domains in required.items():
+            remote_position = next(
+                i for i, line in enumerate(lines)
+                if line.startswith(f"ruleset={group},http")
+            )
+            for domain in domains:
+                rule = f"ruleset={group},[]DOMAIN-SUFFIX,{domain}"
+                with self.subTest(group=group, domain=domain):
+                    self.assertEqual(lines.count(rule), 1)
+                    self.assertLess(lines.index(rule), remote_position)
+                    self.assertLess(lines.index(rule), final_position)
 
     def test_required_generator_flags_are_enabled(self):
         self.assertIn("enable_rule_generator=true", self.text)
