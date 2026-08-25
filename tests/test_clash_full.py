@@ -110,6 +110,21 @@ class ClashFullCountryCoverageTest(unittest.TestCase):
         expected = set(CORE_CASES) | set(SUBSCRIPTION_COUNTRY_CASES)
         self.assertEqual(references, expected)
 
+    def test_url_test_groups_fail_over_quickly_without_latency_flapping(self):
+        """Health checks should react quickly but ignore tiny delay changes."""
+        url_test_lines = [
+            line for line in self.text.splitlines()
+            if line.startswith("custom_proxy_group=") and "`url-test`" in line
+        ]
+        self.assertTrue(url_test_lines)
+        for line in url_test_lines:
+            group, _kind, _pattern, url, timing = line.removeprefix(
+                "custom_proxy_group="
+            ).split("`")
+            with self.subTest(group=group):
+                self.assertEqual(url, "https://www.gstatic.com/generate_204")
+                self.assertEqual(timing, "60,5,50")
+
     def test_other_group_is_future_proof_for_every_non_core_country(self):
         pattern = re.compile(self.groups["其他-自动"], re.IGNORECASE)
         for name in FUTURE_COUNTRIES:
