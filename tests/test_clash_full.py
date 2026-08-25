@@ -123,7 +123,7 @@ class ClashFullCountryCoverageTest(unittest.TestCase):
             ).split("`")
             with self.subTest(group=group):
                 self.assertEqual(url, "https://www.gstatic.com/generate_204")
-                self.assertEqual(timing, "60,5,50")
+                self.assertEqual(timing, "30,5,80")
 
     def test_other_group_is_future_proof_for_every_non_core_country(self):
         pattern = re.compile(self.groups["其他-自动"], re.IGNORECASE)
